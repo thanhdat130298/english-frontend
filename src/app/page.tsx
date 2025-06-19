@@ -1,10 +1,8 @@
-// Import React hooks
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import React, { useState, useEffect, useCallback } from 'react';
 import type { JSX } from 'react';
 
-// Import icons from Ant Design
-// Make sure you have installed Ant Design icons: npm install @ant-design/icons
 import { 
     PlusOutlined, BarsOutlined, BulbOutlined, TrophyOutlined, TeamOutlined, 
     ArrowLeftOutlined, BookOutlined, UserAddOutlined, EyeOutlined, SearchOutlined, 
@@ -104,34 +102,25 @@ const CustomModal: React.FC<CustomModalProps> = ({ show, title, message, onConfi
 
 // Helper function to call the Gemini API for text generation
 // NOTE: For a real application, you should handle API key securely (e.g., environment variables, backend proxy)
-const callGeminiAPI = async (prompt: string, responseSchema: any = null): Promise<any> => {
-    let chatHistory = [];
-    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-    // Replace with your actual Gemini API Key
-    const apiKey = "YOUR_GEMINI_API_KEY_HERE";
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-    const headers = { 'Content-Type': 'application/json' };
-    const payload: any = { contents: chatHistory };
-
-    if (responseSchema) {
-        payload.generationConfig = {
-            responseMimeType: "application/json",
-            responseSchema: responseSchema
+interface GeminiResponse {
+    candidates?: Array<{
+        content?: {
+            parts?: Array<{
+                text: string;
+            }>;
         };
-    }
+    }>;
+}
 
+interface ResponseSchema {
+    [key: string]: unknown;
+}
+
+
+const callGeminiAPI = async (prompt: string, responseSchema: ResponseSchema | null = null): Promise<string | ResponseSchema | null> => {
     try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(payload)
-        });
-
-        const result = await response.json();
-        if (result.candidates && result.candidates.length > 0 &&
-            result.candidates[0].content && result.candidates[0].content.parts &&
-            result.candidates[0].content.parts.length > 0) {
+        const result: GeminiResponse = {}; // Mock result for now
+        if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
             const text = result.candidates[0].content.parts[0].text;
             return responseSchema ? JSON.parse(text) : text;
         } else {
@@ -183,7 +172,6 @@ export default function VocabVaultApp() {
         { id: 'f_mock_a', friendId: 'mockFriend456', friendName: 'Học_Văn_A' },
         { id: 'f_mock_b', friendId: 'mockFriend789', friendName: 'Ngữ_Pháp_B' },
     ]);
-    const [isLoadingFriends, setIsLoadingFriends] = useState<boolean>(false);
     const [viewingFriendWords, setViewingFriendWords] = useState<ViewingFriendWords | null>(null);
     const [friendWordsList, setFriendWordsList] = useState<WordItem[]>([]); // Will be mocked dynamically
     const [isLoadingFriendWords, setIsLoadingFriendWords] = useState<boolean>(false);
@@ -196,7 +184,7 @@ export default function VocabVaultApp() {
     const [suggestedExistingWord, setSuggestedExistingWord] = useState<{ word: string; definition: string; translation: string; addedCount: number } | null>(null);
 
     // State for LLM features on individual words
-    const [wordGeneratedSentences, setWordGeneratedSentences] = useState<Map<string, string>>(new Map());
+    const [wordGeneratedSentences, setWordGeneratedSentences] = useState<Map<string, any>>(new Map());
     const [wordSynonymAntonyms, setWordSynonymAntonyms] = useState<Map<string, { synonyms: string[]; antonyms: string[] }>>(new Map());
     const [wordLLMLoading, setWordLLMLoading] = useState<Map<string, string>>(new Map());
 
@@ -249,7 +237,7 @@ export default function VocabVaultApp() {
             required: ["definition", "translation"]
         };
 
-        const result = await callGeminiAPI(prompt, schema);
+        const result: any = await callGeminiAPI(prompt, schema);
 
         if (result && result.definition && result.translation) {
             setTranslationResult(result);
@@ -283,7 +271,7 @@ export default function VocabVaultApp() {
     };
 
     // Function to delete word from 'My List' (now uses local state/mock)
-    const deleteWord = async (id: string, wordToRemove: string): Promise<void> => {
+    const deleteWord = async (id: string): Promise<void> => {
         setMyWords(prevWords => prevWords.filter(word => word.id !== id));
         showInfoModal("Từ đã được xóa thành công!");
     };
@@ -305,7 +293,7 @@ export default function VocabVaultApp() {
             items: { type: "STRING" }
         };
 
-        const result = await callGeminiAPI(prompt, schema);
+        const result: any = await callGeminiAPI(prompt, schema);
 
         if (Array.isArray(result) && result.length > 0) {
             // For mock, just return words with dummy ratings
@@ -332,9 +320,8 @@ export default function VocabVaultApp() {
         // You might want to update the local suggestedWords state here if you want to reflect the change visually without re-fetching from API.
     };
 
-
     // Function to fetch leaderboard data (now uses mock data)
-    const fetchLeaderboard = async (): Promise<void> => {
+    const fetchLeaderboard = useCallback(async (): Promise<void> => {
         setIsLoadingLeaderboard(true);
         // Simulate API call delay
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -361,15 +348,14 @@ export default function VocabVaultApp() {
         }
         setLeaderboardData(data);
         setIsLoadingLeaderboard(false);
-    };
+    }, [leaderboardType]);
 
     // Effect to refetch leaderboard when leaderboard type changes
     useEffect(() => {
         if (currentView === 'leaderboard') {
             fetchLeaderboard();
         }
-    }, [leaderboardType, currentView]);
-
+    }, [leaderboardType, currentView, fetchLeaderboard]);
 
     // Function to add a friend (now mocks behavior)
     const addFriend = async (): Promise<void> => {
@@ -423,7 +409,7 @@ export default function VocabVaultApp() {
 
     // Function to filter and sort My Words
     const getFilteredAndSortedMyWords = useCallback((): WordItem[] => {
-        let filteredWords = myWords.filter(item =>
+        const filteredWords = myWords.filter(item =>
             item.word.toLowerCase().includes(myListFilter.toLowerCase()) ||
             item.definition.toLowerCase().includes(myListFilter.toLowerCase()) ||
             item.translation.toLowerCase().includes(myListFilter.toLowerCase())
@@ -455,7 +441,7 @@ export default function VocabVaultApp() {
         setWordLLMLoading(prev => new Map(prev).set(itemId, 'sentence'));
         const prompt = `Generate one concise example sentence using the word "${word}". Only provide the sentence.`;
 
-        const result = await callGeminiAPI(prompt);
+        const result: any = await callGeminiAPI(prompt);
 
         if (result) {
             setWordGeneratedSentences(prev => new Map(prev).set(itemId, result));
@@ -483,7 +469,7 @@ export default function VocabVaultApp() {
             required: ["synonyms", "antonyms"]
         };
 
-        const result = await callGeminiAPI(prompt, schema);
+        const result: any = await callGeminiAPI(prompt, schema);
 
         if (result && (result.synonyms || result.antonyms)) {
             setWordSynonymAntonyms(prev => new Map(prev).set(itemId, result));
@@ -539,7 +525,7 @@ export default function VocabVaultApp() {
                 )}
                 {!isFriendView && ( // Only show delete button for owner's list
                     <button
-                        onClick={() => deleteWord(item.id, item.word)}
+                        onClick={() => deleteWord(item.id)}
                         className="px-3 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600 transition-colors duration-300 shadow-sm"
                     >
                         Xóa
@@ -709,12 +695,12 @@ export default function VocabVaultApp() {
                             </div>
 
                             {suggestedExistingWord && (
-                                <div className="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200 shadow-inner" style={{ backgroundColor: colors.highlight, borderColor: colors.complementary }}>
+                                <div className="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200 shadow-inner">
                                     <p className="text-md font-semibold text-gray-800 mb-2">
-                                        Từ này đã được người khác thêm vào! <span className="font-bold">'{suggestedExistingWord.word}'</span> đã được thêm <span className="font-bold text-lg">{suggestedExistingWord.addedCount}</span> lần.
+                                        Từ này đã được người khác thêm vào! <span className="font-bold">&apos;{suggestedExistingWord.word}&apos;</span> đã được thêm <span className="font-bold text-lg">{suggestedExistingWord.addedCount}</span> lần.
                                     </p>
                                     <p className="text-base"><span className="font-bold">Định nghĩa:</span> {suggestedExistingWord.definition}</p>
-                                    <p className="text-base"><span className="font-bold">Dịch (tiếng Tây Ban Nha):</span> {suggestedExistingWord.translation}</p>
+                                    <p className="text-base"><span className="font-bold">Dịch:</span> {suggestedExistingWord.translation}</p>
                                 </div>
                             )}
 
@@ -948,7 +934,7 @@ export default function VocabVaultApp() {
 
                             {friendsList.length === 0 ? (
                                 <p className="text-center text-lg text-gray-500 italic p-8 rounded-lg" style={{ backgroundColor: colors.primary }}>
-                                    You don't have any friends added yet.
+                                    You don&apos;t have any friends added yet.
                                 </p>
                             ) : (
                                 <ul className="space-y-4 flex-grow overflow-y-auto">
@@ -990,12 +976,12 @@ export default function VocabVaultApp() {
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
-                                    <span>Loading {viewingFriendWords.name}'s words...</span>
+                                    <span>Loading {viewingFriendWords.name}&apos;s words...</span>
                                 </p>
                             ) : (
                                 friendWordsList.length === 0 ? (
                                     <p className="text-center text-lg text-gray-500 italic p-8 rounded-lg" style={{ backgroundColor: colors.primary }}>
-                                        {viewingFriendWords.name} hasn't added any words yet, or their list is private.
+                                        {viewingFriendWords.name} hasn&apos;t added any words yet, or their list is private.
                                     </p>
                                 ) : (
                                     <ul className="space-y-4 flex-grow overflow-y-auto">
