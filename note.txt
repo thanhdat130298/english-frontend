@@ -1,0 +1,23 @@
+- Tone màu như sau: #9EABA2
+
+#BDD1C5
+
+#EECC8C
+
+#E8B298
+
+#D3A29D
+
+#A36361
+
+- Header chứa thông tin user, click vào sẽ view my profile
+
+- Add từ sẽ có suggest từ nếu có bất kỳ user đã add trước đó rồi
+
+- My list cần thêm nhiều data mock, các filter search sort, chứa các từ của người mình đang follow
+
+- Suggest là list category hệ thống suggest, chọn tương ứng sẽ xuất hiện các từ tương ứng hoặc hiển thị các từ vựng của người khác. có action đánh giá cao hoặc thấp, comment nhận xét từ.
+
+- Leaderboard cần hiện ra các top khác nhau. cần thêm 1 màn hình report để khám phá các top ví dụ như: Top từ vựng được thêm vào nhiều nhất, top user đã thêm từ vựng vào, top các từ được đánh giá cao, ...
+
+- Friend: cần hiển thị tên các friend/người đã followed
