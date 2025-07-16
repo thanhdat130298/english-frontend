@@ -1,0 +1,259 @@
+// Color Variables
+$colors: (
+  // Primary brand colors - New color palette
+  primary: #80EE98,      // Light green - highest priority
+  secondary: #46DFB1,    // Teal green - second priority
+  accent: #09D1C7,       // Cyan - third priority
+  info: #15919B,         // Dark teal - fourth priority
+  dark: #0C6478,         // Darkest blue - fifth priority
+  text: #213A58,         // Dark blue for text
+  white: #ffffff,        // White
+  
+  // Legacy colors (keeping for compatibility)
+  highlight: #80EE98,    // Same as primary
+  complementary: #46DFB1, // Same as secondary
+  tertiary: #09D1C7,     // Same as accent
+  darkAccent: #0C6478,   // Same as dark
+  
+  // Text colors
+  text-colors: (
+    primary: #213A58,    // Dark blue for main text
+    secondary: #15919B,  // Dark teal for secondary text
+    light: #ffffff,      // White for light backgrounds
+    muted: #6b7280       // Gray for muted text
+  ),
+  
+  // Background colors
+  bg: (
+    primary: #ffffff,    // White background
+    secondary: #f9fafb,  // Light gray background
+    accent: #80EE98,     // Light green background
+    dark: #0C6478        // Dark background
+  ),
+  
+  // Gray scale (keeping for utility classes)
+  gray: (
+    50: #f9fafb,
+    100: #f3f4f6,
+    200: #e5e7eb,
+    300: #d1d5db,
+    400: #9ca3af,
+    500: #6b7280,
+    600: #4b5563,
+    700: #374151,
+    800: #1f2937,
+    900: #111827
+  ),
+  
+  // Indigo scale (keeping for utility classes)
+  indigo: (
+    50: #eef2ff,
+    100: #e0e7ff,
+    200: #c7d2fe,
+    300: #a5b4fc,
+    400: #818cf8,
+    500: #6366f1,
+    600: #4f46e5,
+    700: #4338ca,
+    800: #3730a3,
+    900: #312e81
+  ),
+  
+  // Red scale (keeping for utility classes)
+  red: (
+    500: #ef4444,
+    600: #dc2626
+  ),
+  
+  // Green scale (keeping for utility classes)
+  green: (
+    500: #10b981,
+    600: #059669
+  ),
+  
+  // Blue scale (keeping for utility classes)
+  blue: (
+    500: #3b82f6,
+    600: #2563eb
+  ),
+  
+  // Purple scale (keeping for utility classes)
+  purple: (
+    500: #8b5cf6,
+    600: #7c3aed
+  ),
+  
+  // Yellow scale (keeping for utility classes)
+  yellow: (
+    50: #fefce8,
+    200: #fef08a
+  )
+);
+
+// Typography Variables
+$font-family: (
+  sans: ('Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif),
+  mono: ('JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace)
+);
+
+$font-size: (
+  xs: 0.75rem,    // 12px
+  sm: 0.875rem,   // 14px
+  base: 1rem,     // 16px
+  lg: 1.125rem,   // 18px
+  xl: 1.25rem,    // 20px
+  '2xl': 1.5rem,  // 24px
+  '3xl': 1.875rem, // 30px
+  '4xl': 2.25rem,  // 36px
+  '5xl': 3rem,     // 48px
+  '6xl': 3.75rem   // 60px
+);
+
+$font-weight: (
+  light: 300,
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
+  black: 900
+);
+
+$line-height: (
+  none: 1,
+  tight: 1.25,
+  snug: 1.375,
+  normal: 1.5,
+  relaxed: 1.625,
+  loose: 2
+);
+
+// Spacing Variables
+$spacing: (
+  0: 0,
+  1: 0.25rem,   // 4px
+  2: 0.5rem,    // 8px
+  3: 0.75rem,   // 12px
+  4: 1rem,      // 16px
+  5: 1.25rem,   // 20px
+  6: 1.5rem,    // 24px
+  8: 2rem,      // 32px
+  10: 2.5rem,   // 40px
+  12: 3rem,     // 48px
+  16: 4rem,     // 64px
+  20: 5rem,     // 80px
+  24: 6rem,     // 96px
+  32: 8rem,     // 128px
+  40: 10rem,    // 160px
+  48: 12rem,    // 192px
+  56: 14rem,    // 224px
+  64: 16rem     // 256px
+);
+
+// Border Radius Variables
+$border-radius: (
+  none: 0,
+  sm: 0.125rem,   // 2px
+  base: 0.25rem,  // 4px
+  md: 0.375rem,   // 6px
+  lg: 0.5rem,     // 8px
+  xl: 0.75rem,    // 12px
+  '2xl': 1rem,    // 16px
+  '3xl': 1.5rem,  // 24px
+  full: 9999px
+);
+
+// Shadow Variables
+$box-shadow: (
+  sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+  base: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+  md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+  lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+  xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+  '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+  inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+  none: 'none'
+);
+
+// Transition Variables
+$transition: (
+  duration: (
+    fast: 150ms,
+    normal: 200ms,
+    slow: 300ms
+  ),
+  timing: (
+    ease: ease,
+    linear: linear,
+    ease-in: ease-in,
+    ease-out: ease-out,
+    ease-in-out: ease-in-out
+  )
+);
+
+// Breakpoint Variables
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  '2xl': 1536px
+);
+
+// Z-index Variables
+$z-index: (
+  auto: auto,
+  0: 0,
+  10: 10,
+  20: 20,
+  30: 30,
+  40: 40,
+  50: 50
+);
+
+// Light Theme
+$light-theme: (
+  primary: #80EE98,
+  secondary: #46DFB1,
+  accent: #09D1C7,
+  success: #80EE98,
+  info: #15919B,
+  dark: #0C6478,
+  white: #ffffff,
+  text: #213A58,
+  background: #fff
+);
+
+// Dark Theme
+$dark-theme: (
+  primary: #80EE98,
+  secondary: #46DFB1,
+  accent: #09D1C7,
+  success: #80EE98,
+  info: #15919B,
+  dark: #fff,
+  white: #0C6478,
+  text: #fff,
+  background: #0C6478
+);
+
+// Mixin để apply theme
+@mixin theme-vars($theme) {
+  --color-primary: map-get($theme, primary);
+  --color-secondary: map-get($theme, secondary);
+  --color-accent: map-get($theme, accent);
+  --color-success: map-get($theme, success);
+  --color-info: map-get($theme, info);
+  --color-dark: map-get($theme, dark);
+  --color-white: map-get($theme, white);
+  --color-text: map-get($theme, text);
+  --color-background: map-get($theme, background);
+}
+
+:root {
+  @include theme-vars($light-theme);
+}
+
+.dark {
+  @include theme-vars($dark-theme);
+} 

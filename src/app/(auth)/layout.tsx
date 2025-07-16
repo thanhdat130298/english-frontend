@@ -1,7 +1,7 @@
-export default function LoginLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <section style={{ background: "#2a42a3", padding: "20px", minHeight: "100vh" }}>
-      <h1>🔐 Đăng Nhập</h1>
+    <section className="bg-dark p-5 min-h-screen">
+      <h2>🔑 Authentication Layout</h2>
       {children}
     </section>
   );

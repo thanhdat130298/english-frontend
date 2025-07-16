@@ -1,8 +1,8 @@
-export default function LayoutsNotFound({ children }: { children: React.ReactNode }) {
+export default function NotFound() {
   return (
-    <div style={{ background: "#f0f0f0", padding: "20px" }}>
-      <h2>🔑 Authentication Layout</h2>
-      {children}
+    <div className="bg-gray-100 p-5">
+      <h2>Not Found</h2>
+      <p>Could not find requested resource</p>
     </div>
   );
 }

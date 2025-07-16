@@ -1,0 +1,1 @@
+export type AppView = 'addWord' | 'myList' | 'suggestions' | 'leaderboard' | 'friends' | 'viewFriendWords' | 'myProfile'; 
