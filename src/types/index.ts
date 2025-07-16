@@ -57,7 +57,7 @@ export interface WordItemProps {
     onDelete?: (id: string) => void;
     onGenerateSentence?: (word: string, itemId: string) => void;
     onGetSynonymsAntonyms?: (word: string, itemId: string) => void;
-    wordGeneratedSentences?: Map<string, any>;
+    wordGeneratedSentences?: Map<string, unknown>;
     wordSynonymAntonyms?: Map<string, { synonyms: string[]; antonyms: string[] }>;
     wordLLMLoading?: Map<string, string>;
 }

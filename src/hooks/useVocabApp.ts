@@ -55,7 +55,7 @@ export const useVocabApp = () => {
     const [suggestedExistingWord, setSuggestedExistingWord] = useState<{ word: string; definition: string; translation: string; addedCount: number } | null>(null);
 
     // State for LLM features on individual words
-    const [wordGeneratedSentences, setWordGeneratedSentences] = useState<Map<string, any>>(new Map());
+    const [wordGeneratedSentences, setWordGeneratedSentences] = useState<Map<string, unknown>>(new Map());
     const [wordSynonymAntonyms, setWordSynonymAntonyms] = useState<Map<string, { synonyms: string[]; antonyms: string[] }>>(new Map());
     const [wordLLMLoading, setWordLLMLoading] = useState<Map<string, string>>(new Map());
 
@@ -102,10 +102,10 @@ export const useVocabApp = () => {
             required: ["definition", "translation"]
         };
 
-        const result: any = await callGeminiAPI(prompt, schema);
+        const result: unknown = await callGeminiAPI(prompt, schema);
 
-        if (result && result.definition && result.translation) {
-            setTranslationResult(result);
+        if (result && typeof result === 'object' && 'definition' in result && 'translation' in result) {
+            setTranslationResult(result as { definition: string; translation: string });
         } else {
             showInfoModal("Không thể truy xuất bản dịch và định nghĩa. Vui lòng thử lại.");
             setTranslationResult({ definition: 'Không tìm thấy', translation: 'Không tìm thấy' });
@@ -158,7 +158,7 @@ export const useVocabApp = () => {
             items: { type: "STRING" }
         };
 
-        const result: any = await callGeminiAPI(prompt, schema);
+        const result: unknown = await callGeminiAPI(prompt, schema);
 
         if (Array.isArray(result) && result.length > 0) {
             const wordsWithRatings = result.map(word => ({
@@ -262,7 +262,7 @@ export const useVocabApp = () => {
         setWordLLMLoading(prev => new Map(prev).set(itemId, 'sentence'));
         const prompt = `Generate one concise example sentence using the word "${word}". Only provide the sentence.`;
 
-        const result: any = await callGeminiAPI(prompt);
+        const result: unknown = await callGeminiAPI(prompt);
 
         if (result) {
             setWordGeneratedSentences(prev => new Map(prev).set(itemId, result));
@@ -290,10 +290,10 @@ export const useVocabApp = () => {
             required: ["synonyms", "antonyms"]
         };
 
-        const result: any = await callGeminiAPI(prompt, schema);
+        const result: unknown = await callGeminiAPI(prompt, schema);
 
-        if (result && (result.synonyms || result.antonyms)) {
-            setWordSynonymAntonyms(prev => new Map(prev).set(itemId, result));
+        if (result && typeof result === 'object' && 'synonyms' in result && 'antonyms' in result) {
+            setWordSynonymAntonyms(prev => new Map(prev).set(itemId, result as { synonyms: string[]; antonyms: string[] }));
         } else {
             setWordSynonymAntonyms(prev => new Map(prev).set(itemId, { synonyms: ["Not found"], antonyms: ["Not found"] }));
         }

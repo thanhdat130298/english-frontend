@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { SearchOutlined, SortAscendingOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { WordItem } from '../types';
 import WordItemComponent from './WordItem';
 import '../styles/main.scss';

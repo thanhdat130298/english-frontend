@@ -52,7 +52,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
 
             {suggestedWords.length > 0 && (
                 <div className="space-y-4">
-                    <h3 className="text-xl font-semibold text-dark">Gợi ý cho chủ đề "{topic}"</h3>
+                    <h3 className="text-xl font-semibold text-dark">Gợi ý cho chủ đề {topic}</h3>
                     <ul className="space-y-3">
                         {suggestedWords.map((word) => (
                             <li key={word.word} className="p-4 bg-white border border-secondary rounded-lg shadow-md flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">

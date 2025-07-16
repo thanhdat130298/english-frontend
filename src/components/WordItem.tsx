@@ -100,5 +100,4 @@ const WordItem: React.FC<WordItemProps> = ({
         </li>
     );
 };
-
-export default WordItem; 
+export default WordItem;
